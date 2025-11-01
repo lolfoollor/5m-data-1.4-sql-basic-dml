@@ -65,7 +65,11 @@ Replace `<column_name>` with `*` to select all columns from a table:
 SELECT * FROM resale_flat_prices_2017;
 ```
 
-> Select any 3 columns from the table.
+> P1: Select any 3 columns from the table.
+```sql
+SELECT month, town, resale_price 
+FROM resale_flat_prices_2017;
+```
 
 ### Operators and functions
 
@@ -117,9 +121,16 @@ Example:
 SELECT ABS(resale_price) FROM resale_flat_prices_2017;
 ```
 
-> Select column town as lowercase
->
-> Concatenate block and street_name and return as a new column named address
+> P1: Select column town as lowercase
+```sql
+SELECT LOWER(town) 
+FROM resale_flat_prices_2017;
+```
+> P2: Concatenate block and street_name and return as a new column named address
+```sql
+SELECT CONCAT('BLK ', block, ' ', street_name) as address
+FROM resale_flat_prices_2017;
+```
 
 ### Filters
 
@@ -153,12 +164,25 @@ FROM resale_flat_prices_2017
 WHERE town = 'BUKIT MERAH';
 ```
 
-> Select flats with floor area greater than 100 sqm
->
-> Select flats with resale price between 400,000 and 500,000
->
-> Select flats with lease commence date later than year 2000 and floor area greater than 100 sqm
-
+> P1: Select flats with floor area greater than 100 sqm
+```sql
+SELECT *
+FROM resale_flat_prices_2017
+WHERE floor_area_sqm > 100;
+```
+> P2: Select flats with resale price between 400,000 and 500,000
+```sql
+SELECT *
+FROM resale_flat_prices_2017
+WHERE resale_price >= 400000 AND resale_price <= 500000;
+WHERE resale_price BETWEEN 400000 AND 500000;
+```
+> P3: Select flats with lease commence date later than year 2000 and floor area greater than 100 sqm
+```sql
+SELECT *
+FROM resale_flat_prices_2017
+WHERE lease_commence_date > 2000 AND floor_area_sqm > 100;
+```
 ### Sorting
 
 The `ORDER BY` clause is used to sort data by a column in a `SELECT` statement. It can sort data in ascending or descending order. The default is ascending order. It can also sort by multiple columns.
@@ -181,7 +205,15 @@ FROM resale_flat_prices_2017
 ORDER BY lease_commence_date DESC, resale_price DESC;
 ```
 
-> Select flats from highest to lowest resale price in Punggol
+> P1: Select flats from highest to lowest resale price in Punggol
+```sql
+SELECT *
+FROM resale_flat_prices_2017
+WHERE town == 'PUNGGOL'
+ORDER BY resale_price DESC;
+```
+
+**You can use WHERE town LIKE 'P%' to find all town that starts with P**
 
 ### Aggregate functions
 
@@ -211,9 +243,20 @@ SELECT AVG(resale_price) FROM resale_flat_prices_2017;
 SELECT MAX(resale_price) FROM resale_flat_prices_2017;
 ```
 
-> Select the average resale price of flats in Bishan
->
-> Select the total resale value (price) of flats in Tampines
+> P1: Select the average resale price of flats in Bishan
+```sql
+SELECT town, ROUND(AVG(resale_price), 2) as avg_resale_price
+FROM resale_flat_prices_2017
+WHERE town == 'BISHAN'
+GROUP BY town; -- Optional if you want to just put avg and remove town from select
+```
+> P2: Select the total resale value (price) of flats in Tampines
+```sql
+SELECT town, SUM(resale_price) as total
+FROM resale_flat_prices_2017
+WHERE town == 'TAMPINES'
+GROUP BY town; -- Optional if you want to just put avg and remove town from select
+```
 
 ### Group by
 
@@ -252,11 +295,35 @@ GROUP BY town, lease_commence_date
 ORDER BY town, lease_commence_date DESC;
 ```
 
-> Select the average resale price by flat type
->
-> Select the average resale price by flat type and flat model
->
-> Select the average resale price by town and lease commence date only for lease commence dates after year 2010 and sort by town (descending) and lease commence date (descending)
+> P1: Select the average resale price by flat type
+```sql
+SELECT flat_type, ROUND(AVG(resale_price), 2) as avg_resale_price
+FROM resale_flat_prices_2017
+GROUP BY flat_type;
+```
+> P2: Select the average resale price by flat type and flat model
+```sql
+SELECT flat_type, flat_model, ROUND(AVG(resale_price), 2) as avg_resale_price
+FROM resale_flat_prices_2017
+GROUP BY flat_type, flat_model
+ORDER BY avg_resale_price;
+```
+> P3: Select the average resale price by town and lease commence date only for lease commence dates after year 2010 and sort by town (descending) and lease commence date (descending)
+```sql
+SELECT town, lease_commence_date, ROUND(AVG(resale_price), 2) as avg_resale_price
+FROM resale_flat_prices_2017
+WHERE lease_commence_date > 2010
+GROUP BY town, lease_commence_date
+ORDER BY town DESC, lease_commence_date DESC;
+
+-- or
+
+SELECT town, lease_commence_date, ROUND(AVG(resale_price), 2) AS avg_resale_price
+FROM resale_flat_prices_2017
+GROUP BY town, lease_commence_date
+HAVING lease_commence_date > 2010 -- Does filter AFTER the grouping
+ORDER BY town DESC, lease_commence_date DESC;
+```
 
 ### Having
 
@@ -289,7 +356,13 @@ HAVING AVG(resale_price) > 500000;
 
 `HAVING` can only be used on columns that appear in the `SELECT` clause or columns that are used in aggregate functions.
 
-> Select the maximum resale price by town only for town with maximum resale price greater than 1,000,000
+> P1: Select the maximum resale price by town only for town with maximum resale price greater than 1,000,000
+```sql
+SELECT town, MAX(resale_price) as max_resale_price
+FROM resale_flat_prices_2017
+GROUP BY town
+HAVING max_resale_price > 1000000;
+```
 
 ### Advanced operators and functions
 
@@ -325,7 +398,11 @@ The `DISTINCT` operator is used to return unique (remove duplicated) values in a
 SELECT DISTINCT town FROM resale_flat_prices_2017;
 ```
 
-> Return the unique flat types and flat models
+> P1: Return the unique flat types and flat models
+```sql
+SELECT DISTINCT flat_type, flat_model 
+FROM resale_flat_prices_2017;
+```
 
 #### `CASE`
 
@@ -345,7 +422,45 @@ CASE WHEN resale_price > 1000000 THEN 'High' WHEN resale_price > 500000 THEN 'Me
 FROM resale_flat_prices_2017;
 ```
 
-> Return the records with a new column `flat_size` with values `Small` if flat type is `1-3 ROOM`, `Medium` if flat type is `4 ROOM` and `Large` if flat type is `5 ROOM`, `EXECUTIVE` or `MULTI-GENERATION`
+> P1: Return the records with a new column `flat_size` with values `Small` if flat type is `1-3 ROOM`, `Medium` if flat type is `4 ROOM` and `Large` if flat type is `5 ROOM`, `EXECUTIVE` or `MULTI-GENERATION`
+```sql
+SELECT *, 
+CASE WHEN flat_type IN ('1 ROOM', '2 ROOM', '3 ROOM') THEN 'Small' ELSE 
+	CASE WHEN flat_type == '4 ROOM' THEN 'Medium' ELSE 'LARGE' END 
+END AS flat_size
+FROM resale_flat_prices_2017;
+
+-- or non nested CASE 
+
+SELECT *,
+  CASE 
+    WHEN flat_type IN ('1 ROOM', '2 ROOM', '3 ROOM') THEN 'Small'
+    WHEN flat_type = '4 ROOM' THEN 'Medium'
+    WHEN flat_type IN ('5 ROOM', 'EXECUTIVE', 'MULTI-GENERATION') THEN 'Large'
+    ELSE 'Unknown'
+  END AS flat_size
+FROM resale_flat_prices_2017;
+
+-- or you can just create a new table and left join (Perm)
+CREATE TEMPORARY TABLE flat_size_mapping (
+    flat_type VARCHAR,
+    flat_size VARCHAR
+);
+
+INSERT INTO flat_size_mapping (flat_type, flat_size) VALUES
+('1 ROOM', 'Small'),
+('2 ROOM', 'Small'),
+('3 ROOM', 'Small'),
+('4 ROOM', 'Medium'),
+('5 ROOM', 'Large'),
+('EXECUTIVE', 'Large'),
+('MULTI-GENERATION', 'Large');
+
+SELECT rfp.*, fsm.flat_size
+FROM resale_flat_prices_2017 rfp
+LEFT JOIN flat_size_mapping fsm
+  ON rfp.flat_type = fsm.flat_type;
+```
 
 #### `CAST`
 
