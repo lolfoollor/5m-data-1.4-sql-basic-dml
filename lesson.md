@@ -64,12 +64,15 @@ Replace `<column_name>` with `*` to select all columns from a table:
 ```sql
 SELECT * FROM resale_flat_prices_2017;
 ```
+<details>
+<summary><strong>Problem 1: Select any 3 columns from the table.</strong></summary>
+<br>
 
-> P1: Select any 3 columns from the table.
 ```sql
 SELECT month, town, resale_price 
 FROM resale_flat_prices_2017;
 ```
+</details>
 
 ### Operators and functions
 
@@ -120,17 +123,25 @@ Example:
 ```sql
 SELECT ABS(resale_price) FROM resale_flat_prices_2017;
 ```
+<details>
+<summary><strong>Problem 1: Select column town as lowercase.</strong></summary>
+<br>
 
-> P1: Select column town as lowercase
 ```sql
 SELECT LOWER(town) 
 FROM resale_flat_prices_2017;
 ```
-> P2: Concatenate block and street_name and return as a new column named address
+</details>
+
+<details>
+<summary><strong>Problem 2: Concatenate block and street_name and return as a new column named address.</strong></summary>
+<br>
+
 ```sql
 SELECT CONCAT('BLK ', block, ' ', street_name) as address
 FROM resale_flat_prices_2017;
 ```
+</details>
 
 ### Filters
 
@@ -164,25 +175,40 @@ FROM resale_flat_prices_2017
 WHERE town = 'BUKIT MERAH';
 ```
 
-> P1: Select flats with floor area greater than 100 sqm
+<details>
+<summary><strong>Problem 1: Select flats with floor area greater than 100 sqm.</strong></summary>
+<br>
+
 ```sql
 SELECT *
 FROM resale_flat_prices_2017
 WHERE floor_area_sqm > 100;
 ```
-> P2: Select flats with resale price between 400,000 and 500,000
+</details>
+
+<details>
+<summary><strong>Problem 2: Select flats with resale price between 400,000 and 500,000.</strong></summary>
+<br>
+
 ```sql
 SELECT *
 FROM resale_flat_prices_2017
 WHERE resale_price >= 400000 AND resale_price <= 500000;
 WHERE resale_price BETWEEN 400000 AND 500000;
 ```
-> P3: Select flats with lease commence date later than year 2000 and floor area greater than 100 sqm
+</details>
+
+<details>
+<summary><strong>Problem 3: Select flats with lease commence date later than year 2000 and floor area greater than 100 sqm.</strong></summary>
+<br>
+
 ```sql
 SELECT *
 FROM resale_flat_prices_2017
 WHERE lease_commence_date > 2000 AND floor_area_sqm > 100;
 ```
+</details>
+
 ### Sorting
 
 The `ORDER BY` clause is used to sort data by a column in a `SELECT` statement. It can sort data in ascending or descending order. The default is ascending order. It can also sort by multiple columns.
@@ -204,16 +230,18 @@ SELECT *
 FROM resale_flat_prices_2017
 ORDER BY lease_commence_date DESC, resale_price DESC;
 ```
+<details>
+<summary><strong>Problem 1: Select flats from highest to lowest resale price in Punggol.</strong></summary>
+<br>
 
-> P1: Select flats from highest to lowest resale price in Punggol
 ```sql
 SELECT *
 FROM resale_flat_prices_2017
 WHERE town == 'PUNGGOL'
 ORDER BY resale_price DESC;
 ```
-
 **You can use WHERE town LIKE 'P%' to find all town that starts with P**
+</details>
 
 ### Aggregate functions
 
@@ -243,20 +271,29 @@ SELECT AVG(resale_price) FROM resale_flat_prices_2017;
 SELECT MAX(resale_price) FROM resale_flat_prices_2017;
 ```
 
-> P1: Select the average resale price of flats in Bishan
+<details>
+<summary><strong>Problem 1: Select the average resale price of flats in Bishan.</strong></summary>
+<br>
+
 ```sql
 SELECT town, ROUND(AVG(resale_price), 2) as avg_resale_price
 FROM resale_flat_prices_2017
 WHERE town == 'BISHAN'
 GROUP BY town; -- Optional if you want to just put avg and remove town from select
 ```
-> P2: Select the total resale value (price) of flats in Tampines
+</details>
+
+<details>
+<summary><strong>Problem 2: Select the total resale value (price) of flats in Tampines.</strong></summary>
+<br>
+
 ```sql
 SELECT town, SUM(resale_price) as total
 FROM resale_flat_prices_2017
 WHERE town == 'TAMPINES'
 GROUP BY town; -- Optional if you want to just put avg and remove town from select
 ```
+</details>
 
 ### Group by
 
@@ -295,20 +332,33 @@ GROUP BY town, lease_commence_date
 ORDER BY town, lease_commence_date DESC;
 ```
 
-> P1: Select the average resale price by flat type
+<details>
+<summary><strong>Problem 1: Select the average resale price by flat type.</strong></summary>
+<br>
+
 ```sql
 SELECT flat_type, ROUND(AVG(resale_price), 2) as avg_resale_price
 FROM resale_flat_prices_2017
 GROUP BY flat_type;
 ```
-> P2: Select the average resale price by flat type and flat model
+</details>
+
+<details>
+<summary><strong>Problem 2: Select the average resale price by flat type and flat model.</strong></summary>
+<br>
+
 ```sql
 SELECT flat_type, flat_model, ROUND(AVG(resale_price), 2) as avg_resale_price
 FROM resale_flat_prices_2017
 GROUP BY flat_type, flat_model
 ORDER BY avg_resale_price;
 ```
-> P3: Select the average resale price by town and lease commence date only for lease commence dates after year 2010 and sort by town (descending) and lease commence date (descending)
+</details>
+
+<details>
+<summary><strong>Problem 3: Select the average resale price by town and lease commence date only for lease commence dates after year 2010 and sort by town (descending) and lease commence date (descending).</strong></summary>
+<br>
+
 ```sql
 SELECT town, lease_commence_date, ROUND(AVG(resale_price), 2) as avg_resale_price
 FROM resale_flat_prices_2017
@@ -324,6 +374,7 @@ GROUP BY town, lease_commence_date
 HAVING lease_commence_date > 2010 -- Does filter AFTER the grouping
 ORDER BY town DESC, lease_commence_date DESC;
 ```
+</details>
 
 ### Having
 
@@ -356,13 +407,17 @@ HAVING AVG(resale_price) > 500000;
 
 `HAVING` can only be used on columns that appear in the `SELECT` clause or columns that are used in aggregate functions.
 
-> P1: Select the maximum resale price by town only for town with maximum resale price greater than 1,000,000
+<details>
+<summary><strong>Problem 1: Select the maximum resale price by town only for town with maximum resale price greater than 1,000,000.</strong></summary>
+<br>
+
 ```sql
 SELECT town, MAX(resale_price) as max_resale_price
 FROM resale_flat_prices_2017
 GROUP BY town
 HAVING max_resale_price > 1000000;
 ```
+</details>
 
 ### Advanced operators and functions
 
@@ -398,11 +453,15 @@ The `DISTINCT` operator is used to return unique (remove duplicated) values in a
 SELECT DISTINCT town FROM resale_flat_prices_2017;
 ```
 
-> P1: Return the unique flat types and flat models
+<details>
+<summary><strong>Problem 1: Return the unique flat types and flat models.</strong></summary>
+<br>
+
 ```sql
 SELECT DISTINCT flat_type, flat_model 
 FROM resale_flat_prices_2017;
 ```
+</details>
 
 #### `CASE`
 
@@ -422,7 +481,10 @@ CASE WHEN resale_price > 1000000 THEN 'High' WHEN resale_price > 500000 THEN 'Me
 FROM resale_flat_prices_2017;
 ```
 
-> P1: Return the records with a new column `flat_size` with values `Small` if flat type is `1-3 ROOM`, `Medium` if flat type is `4 ROOM` and `Large` if flat type is `5 ROOM`, `EXECUTIVE` or `MULTI-GENERATION`
+<details>
+<summary><strong>Problem 1: Return the records with a new column <code>flat_size</code> with values <code>Small</code> if flat type is <code>1-3 ROOM</code>, <code>Medium</code> if flat type is <code>4 ROOM</code> and <code>Large</code> if flat type is <code>5 ROOM</code>, <code>EXECUTIVE</code> or <code>MULTI-GENERATION</code>.</strong></summary>
+<br>
+
 ```sql
 SELECT *, 
 CASE WHEN flat_type IN ('1 ROOM', '2 ROOM', '3 ROOM') THEN 'Small' ELSE 
@@ -461,6 +523,7 @@ FROM resale_flat_prices_2017 rfp
 LEFT JOIN flat_size_mapping fsm
   ON rfp.flat_type = fsm.flat_type;
 ```
+</details>
 
 #### `CAST`
 
