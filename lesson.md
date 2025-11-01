@@ -65,7 +65,7 @@ Replace `<column_name>` with `*` to select all columns from a table:
 SELECT * FROM resale_flat_prices_2017;
 ```
 <details>
-<summary><strong>Problem 1: Select any 3 columns from the table.</strong></summary>
+<summary><strong><u>Problem 1: Select any 3 columns from the table.</u></strong></summary>
 <br>
 
 ```sql
@@ -124,7 +124,7 @@ Example:
 SELECT ABS(resale_price) FROM resale_flat_prices_2017;
 ```
 <details>
-<summary><strong>Problem 1: Select column town as lowercase.</strong></summary>
+<summary><strong><u>Problem 1: Select column town as lowercase.</u></strong></summary>
 <br>
 
 ```sql
@@ -134,7 +134,7 @@ FROM resale_flat_prices_2017;
 </details>
 
 <details>
-<summary><strong>Problem 2: Concatenate block and street_name and return as a new column named address.</strong></summary>
+<summary><strong><u>Problem 2: Concatenate block and street_name and return as a new column named address.</u></strong></summary>
 <br>
 
 ```sql
@@ -176,7 +176,7 @@ WHERE town = 'BUKIT MERAH';
 ```
 
 <details>
-<summary><strong>Problem 1: Select flats with floor area greater than 100 sqm.</strong></summary>
+<summary><strong><u>Problem 1: Select flats with floor area greater than 100 sqm.</u></strong></summary>
 <br>
 
 ```sql
@@ -187,7 +187,7 @@ WHERE floor_area_sqm > 100;
 </details>
 
 <details>
-<summary><strong>Problem 2: Select flats with resale price between 400,000 and 500,000.</strong></summary>
+<summary><strong><u>Problem 2: Select flats with resale price between 400,000 and 500,000.</u></strong></summary>
 <br>
 
 ```sql
@@ -199,7 +199,7 @@ WHERE resale_price BETWEEN 400000 AND 500000;
 </details>
 
 <details>
-<summary><strong>Problem 3: Select flats with lease commence date later than year 2000 and floor area greater than 100 sqm.</strong></summary>
+<summary><strong><u>Problem 3: Select flats with lease commence date later than year 2000 and floor area greater than 100 sqm.</u></strong></summary>
 <br>
 
 ```sql
@@ -231,7 +231,7 @@ FROM resale_flat_prices_2017
 ORDER BY lease_commence_date DESC, resale_price DESC;
 ```
 <details>
-<summary><strong>Problem 1: Select flats from highest to lowest resale price in Punggol.</strong></summary>
+<summary><strong><u>Problem 1: Select flats from highest to lowest resale price in Punggol.</u></strong></summary>
 <br>
 
 ```sql
@@ -272,7 +272,7 @@ SELECT MAX(resale_price) FROM resale_flat_prices_2017;
 ```
 
 <details>
-<summary><strong>Problem 1: Select the average resale price of flats in Bishan.</strong></summary>
+<summary><strong><u>Problem 1: Select the average resale price of flats in Bishan.</u></strong></summary>
 <br>
 
 ```sql
@@ -284,7 +284,7 @@ GROUP BY town; -- Optional if you want to just put avg and remove town from sele
 </details>
 
 <details>
-<summary><strong>Problem 2: Select the total resale value (price) of flats in Tampines.</strong></summary>
+<summary><strong><u>Problem 2: Select the total resale value (price) of flats in Tampines.</u></strong></summary>
 <br>
 
 ```sql
@@ -333,7 +333,7 @@ ORDER BY town, lease_commence_date DESC;
 ```
 
 <details>
-<summary><strong>Problem 1: Select the average resale price by flat type.</strong></summary>
+<summary><strong><u>Problem 1: Select the average resale price by flat type.</u></strong></summary>
 <br>
 
 ```sql
@@ -344,7 +344,7 @@ GROUP BY flat_type;
 </details>
 
 <details>
-<summary><strong>Problem 2: Select the average resale price by flat type and flat model.</strong></summary>
+<summary><strong><u>Problem 2: Select the average resale price by flat type and flat model.</u></strong></summary>
 <br>
 
 ```sql
@@ -356,7 +356,7 @@ ORDER BY avg_resale_price;
 </details>
 
 <details>
-<summary><strong>Problem 3: Select the average resale price by town and lease commence date only for lease commence dates after year 2010 and sort by town (descending) and lease commence date (descending).</strong></summary>
+<summary><strong><u>Problem 3: Select the average resale price by town and lease commence date only for lease commence dates after year 2010 and sort by town (descending) and lease commence date (descending).</u></strong></summary>
 <br>
 
 ```sql
@@ -408,7 +408,7 @@ HAVING AVG(resale_price) > 500000;
 `HAVING` can only be used on columns that appear in the `SELECT` clause or columns that are used in aggregate functions.
 
 <details>
-<summary><strong>Problem 1: Select the maximum resale price by town only for town with maximum resale price greater than 1,000,000.</strong></summary>
+<summary><strong><u>Problem 1: Select the maximum resale price by town only for town with maximum resale price greater than 1,000,000.</u></strong></summary>
 <br>
 
 ```sql
@@ -454,7 +454,7 @@ SELECT DISTINCT town FROM resale_flat_prices_2017;
 ```
 
 <details>
-<summary><strong>Problem 1: Return the unique flat types and flat models.</strong></summary>
+<summary><strong><u>Problem 1: Return the unique flat types and flat models.</u></strong></summary>
 <br>
 
 ```sql
@@ -482,7 +482,7 @@ FROM resale_flat_prices_2017;
 ```
 
 <details>
-<summary><strong>Problem 1: Return the records with a new column <code>flat_size</code> with values <code>Small</code> if flat type is <code>1-3 ROOM</code>, <code>Medium</code> if flat type is <code>4 ROOM</code> and <code>Large</code> if flat type is <code>5 ROOM</code>, <code>EXECUTIVE</code> or <code>MULTI-GENERATION</code>.</strong></summary>
+<summary><strong><u>Problem 1: Return the records with a new column <code>flat_size</code> with values <code>Small</code> if flat type is <code>1-3 ROOM</code>, <code>Medium</code> if flat type is <code>4 ROOM</code> and <code>Large</code> if flat type is <code>5 ROOM</code>, <code>EXECUTIVE</code> or <code>MULTI-GENERATION</code>.</u></strong></summary>
 <br>
 
 ```sql
